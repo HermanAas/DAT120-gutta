@@ -1,2 +1,5 @@
-print("DAT120-Forge")
-print("Gruppeprosjekt med værdata fra Sinnes værstasjon")
+filnavn = "sinnes_2014_2025.csv"
+
+with open(filnavn, "r", encoding="utf-8") as fil:
+    for linje in fil:
+        print(linje)
