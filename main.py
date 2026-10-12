@@ -81,6 +81,7 @@ def plott_år(valgt_år):
     akser[3].set_xlabel("Dato")
 
     fig.suptitle(f"Værdata for {valgt_år}")
+    fig.autofmt_xdate()
     fig.tight_layout()
     plt.show()
 
