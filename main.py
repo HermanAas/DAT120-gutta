@@ -170,19 +170,19 @@ def main():
         Godkjente_år = [2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025] 
         print(f"\nÅr i liste: {Godkjente_år} ")
         while True:
-        try:
-            valgt_år = int(input("\nSkriv inn år mellom 2014 og 2025: "))
-            if valgt_år in Godkjente_år:
-                vekts_per_år(valgt_år)
-                break
-            else:
-                print(f"\n{valgt_år} er ikke i listen: {Godkjente_år}")
+            try:
+                valgt_år = int(input("\nSkriv inn år mellom 2014 og 2025: "))
+                if valgt_år in Godkjente_år:
+                    vekts_per_år(valgt_år)
+                    break
+                else:
+                    print(f"\n{valgt_år} er ikke i listen: {Godkjente_år}")
+                    print("Prøv på nytt\n")
+                    continue
+            except ValueError, TypeError:
+                print(f"\nDet er bare tall fra denne listen som er godkjent: {Godkjente_år}")
                 print("Prøv på nytt\n")
                 continue
-        except ValueError, TypeError:
-            print(f"\nDet er bare tall fra denne listen som er godkjent: {Godkjente_år}")
-            print("Prøv på nytt\n")
-            continue
         
 
     else:
