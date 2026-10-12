@@ -1,21 +1,20 @@
 
-
-
 import datetime
 import matplotlib.pyplot as plt
 
 
-FILNAVN = "DAT120-gutta/sinnes_2014_2025.csv"
+filnavn = "sinnes_2014_2025.csv"
 
 
+# Oppgave d: Les værdata for et valgt år
 def les_årsdata(valgt_år):
     datoer = []
     temperaturer = []
     nedbor = []
     vind = []
-    snodybde = []
+    snødybder = []
 
-    with open(FILNAVN, "r", encoding="utf-8-sig") as fil:
+    with open(filnavn, "r", encoding="utf-8-sig") as fil:
         for linje in fil:
             parts = linje.strip().split(";")
 
@@ -30,7 +29,7 @@ def les_årsdata(valgt_år):
                 temperatur = parts[3].strip().replace(",", ".")
                 regn = parts[4].strip().replace(",", ".")
                 vindstyrke = parts[5].strip().replace(",", ".")
-                sno = parts[6].strip().replace(",", ".")
+                snø = parts[6].strip().replace(",", ".")
 
                 datoer.append(dato)
                 temperaturer.append(
@@ -42,18 +41,19 @@ def les_årsdata(valgt_år):
                 vind.append(
                     float(vindstyrke) if vindstyrke != "-" else None
                 )
-                snodybde.append(
-                    float(sno) if sno != "-" else None
+                snødybder.append(
+                    float(snø) if snø != "-" else None
                 )
 
             except (ValueError, IndexError):
                 continue
 
-    return datoer, temperaturer, nedbor, vind, snodybde
+    return datoer, temperaturer, nedbor, vind, snødybder
 
 
+# Oppgave d: Lag diagrammer
 def plott_år(valgt_år):
-    datoer, temperaturer, nedbor, vind, snodybde = (
+    datoer, temperaturer, nedbor, vind, snødybder = (
         les_årsdata(valgt_år)
     )
 
@@ -61,20 +61,19 @@ def plott_år(valgt_år):
         print("Fant ingen værdata for dette året.")
         return
 
-    # Lag fire diagrammer, ett for hver værvariabel
     fig, akser = plt.subplots(4, 1, figsize=(12, 12))
 
-    akser[0].plot(datoer, snodybde)
+    akser[0].plot(datoer, snødybder)
     akser[0].set_title("Snødybde")
     akser[0].set_ylabel("Snødybde (cm)")
 
     akser[1].plot(datoer, nedbor)
-    akser[1].set_title("Døgnnedbør")
+    akser[1].set_title("Nedbør")
     akser[1].set_ylabel("Nedbør (mm)")
 
     akser[2].plot(datoer, temperaturer)
     akser[2].set_title("Middeltemperatur")
-    akser[2].set_ylabel("Temperatur (°C)")
+    akser[2].set_ylabel("Temperatur (grader C)")
 
     akser[3].plot(datoer, vind)
     akser[3].set_title("Høyeste middelvind")
@@ -86,10 +85,11 @@ def plott_år(valgt_år):
     plt.show()
 
 
-def tell_skiforedager(sessong_år):
+# Oppgave e: Tell dager med skiføre
+def tell_skiforedager(sessong_input):
     ski_føre = 0
 
-    with open(FILNAVN, "r", encoding="utf-8-sig") as fil:
+    with open(filnavn, "r", encoding="utf-8-sig") as fil:
         for linje in fil:
             parts = linje.strip().split(";")
 
@@ -97,7 +97,7 @@ def tell_skiforedager(sessong_år):
                 dag, måned, år = map(
                     int, parts[2].strip().split(".")
                 )
-                snødybde = float(
+                snø_data = float(
                     parts[6].strip().replace(",", ".")
                 )
 
@@ -105,31 +105,34 @@ def tell_skiforedager(sessong_år):
                 continue
 
             i_sesong = (
-                (år == sessong_år - 1 and måned >= 11)
-                or (år == sessong_år and måned <= 5)
+                (år == sessong_input - 1 and måned >= 11)
+                or (år == sessong_input and måned <= 5)
             )
 
-            if i_sesong and snødybde >= 20:
+            if i_sesong and snø_data >= 20:
                 ski_føre += 1
 
     return ski_føre
 
 
+# Hovedprogram
 def main():
-    print("1: Plotting av værdata (oppgave d)")
-    print("2: Antall dager med skiføre (oppgave e)")
+    print("Velg oppgave:")
+    print("1 - Plotting av værdata (oppgave d)")
+    print("2 - Tell dager med skiføre (oppgave e)")
 
-    valg = input("Velg oppgave (1 eller 2): ")
+    valg = input("Skriv inn 1 eller 2: ")
 
     if valg == "1":
         valgt_år = int(input("Skriv inn årstallet du vil plotte: "))
         plott_år(valgt_år)
 
     elif valg == "2":
-        sessong_år = int(
+        sessong_input = int(
             input("Skriv inn året skisesongen slutter: ")
         )
-        ski_føre = tell_skiforedager(sessong_år)
+
+        ski_føre = tell_skiforedager(sessong_input)
         print("Antall dager med skiføre:", ski_føre)
 
     else:
