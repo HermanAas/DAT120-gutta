@@ -114,6 +114,35 @@ def tell_skiforedager(sessong_input):
                 ski_føre += 1
 
     return ski_føre
+# Oppgave f: Plantevekst
+def vekts_per_år(årstall):
+    temperatur_år = []
+    plante_vekst = 0.0
+
+
+    with open(filnavn, "r", encoding="utf-8" ) as tempfil:
+        
+        for linjer in tempfil:
+            
+            rekke = linjer.split(";")
+            året = rekke[2]
+           
+            str_årstall = str(årstall)
+
+            if året.endswith(str_årstall):
+                try:
+                    temperatur_år.append(float(rekke[3].replace(",",".")))
+                except ValueError, TypeError:
+                    continue
+            else: 
+                continue
+        for i in temperatur_år:
+            if i >= 5:
+                plante_vekst += (i - 5)
+            else:
+                continue
+        print(f"\nPlanten har vokst {round(plante_vekst)} mm i {str_årstall}\n")
+        print("Program fullført\n")
 
 
 # Hovedprogram
@@ -121,6 +150,7 @@ def main():
     print("Velg oppgave:")
     print("1 - Plotting av værdata (oppgave d)")
     print("2 - Tell dager med skiføre (oppgave e)")
+    print("3 - Plantevekst per år (oppgave f)")
 
     valg = input("Skriv inn 1 eller 2: ")
 
@@ -136,8 +166,27 @@ def main():
         ski_føre = tell_skiforedager(sessong_input)
         print("Antall dager med skiføre:", ski_føre)
 
+    elif valg == "3":
+        Godkjente_år = [2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025] 
+        print(f"\nÅr i liste: {Godkjente_år} ")
+        while True:
+        try:
+            valgt_år = int(input("\nSkriv inn år mellom 2014 og 2025: "))
+            if valgt_år in Godkjente_år:
+                vekts_per_år(valgt_år)
+                break
+            else:
+                print(f"\n{valgt_år} er ikke i listen: {Godkjente_år}")
+                print("Prøv på nytt\n")
+                continue
+        except ValueError, TypeError:
+            print(f"\nDet er bare tall fra denne listen som er godkjent: {Godkjente_år}")
+            print("Prøv på nytt\n")
+            continue
+        
+
     else:
-        print("Ugyldig valg. Velg 1 eller 2.")
+        print("Ugyldig valg. Velg 1, 2 eller 3.")
 
 
 if __name__ == "__main__":
