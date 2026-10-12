@@ -129,7 +129,7 @@ def main():
 
     elif valg == "2":
         sessong_input = int(
-            input("Skriv inn året skisesongen slutter: ")
+            input("Skriv inn årstallet til skisesongen: ")
         )
 
         ski_føre = tell_skiforedager(sessong_input)
