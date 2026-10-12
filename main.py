@@ -152,7 +152,7 @@ def main():
     print("2 - Tell dager med skiføre (oppgave e)")
     print("3 - Plantevekst per år (oppgave f)")
 
-    valg = input("Skriv inn 1 eller 2: ")
+    valg = input("Skriv inn 1, 2 eller 3: ")
 
     if valg == "1":
         valgt_år = int(input("Skriv inn årstallet du vil plotte: "))
