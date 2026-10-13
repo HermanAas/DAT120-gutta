@@ -93,10 +93,12 @@ def plott_år(år):
     akser[3].set_xlabel("Dato")
     akser[3].grid(True)
 
-    fig.suptitle(f"Værdata fra Sinnes i {år}")
+
+    fig.suptitle(f"Værdata fra Sinnes i {år}", fontsize=16, y=0.99)
     fig.autofmt_xdate(rotation=30, ha="right")
-    fig.tight_layout()
+    fig.tight_layout(rect=[0, 0, 1, 0.96])
     plt.show()
+
 
 
 # Oppgave e: Tell dager med skiføre
